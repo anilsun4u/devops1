@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: false
+  become_user: root
+  become: true
+  timeout: 6
+  tasks:
+     - name: checking kernel version 
+       command: uname -r
+       register: uptime_out
+     - name: showing output of kernel version
+       debug: msg="output of uptime {{ uptime_out.stdout }}"
+       when: uptime_out.changed

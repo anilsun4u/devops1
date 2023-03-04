@@ -1,0 +1,24 @@
+---
+- hosts: test 
+  become: true
+  tasks:
+    - name: Install the apache2 
+      apt: name=apache2 state=present
+      tags: 
+        - apache2
+
+    - name: Install nginx
+      apt: name=nginx state=present
+      tags:
+        - nginx
+  handlers:
+    - name: Staring {{item}}
+      service: name={{ item }} state=restarted
+      with_items:
+         - apache2 
+         - nginx
+
+    - name: Installing sysstat
+      apt: name=sysstat state=latest
+      tags:
+        - pkgs 

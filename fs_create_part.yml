@@ -1,0 +1,10 @@
+---
+- hosts: test 
+  become: true
+  tasks:
+     - name: Create new primary partition
+       parted:
+         device: /dev/sdb
+         number: 1
+         state: present
+         part_end: 1GiB
